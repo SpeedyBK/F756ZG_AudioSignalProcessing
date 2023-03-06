@@ -145,6 +145,30 @@ int main(void)
 	}
 	HAL_Delay(2);
 
+	if (filterOutput > 995){
+		filterOutput = 995;
+	}else if (filterOutput < -995){
+		filterOutput = -995;
+	}
+
+	for (int i = 0; i < 100; ++i){
+		if (filterOutput >= 0){
+			HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
+			if (filterOutput/10 > i){
+				HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 1);
+			}else {
+				HAL_GPIO_WritePin(LD2_GPIO_Port, LD2_Pin, 0);
+			}
+		}else{
+			HAL_GPIO_WritePin(LD2_GPIO_Port, LD1_Pin, 0);
+			if (filterOutput/-10 > i){
+				HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 1);
+			}else {
+				HAL_GPIO_WritePin(LD3_GPIO_Port, LD3_Pin, 0);
+			}
+		}
+	}
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
